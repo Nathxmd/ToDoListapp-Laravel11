@@ -23,12 +23,21 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $timezones = ['Asia/Jakarta', 'Asia/Singapore', 'UTC', 'America/New_York', 'Europe/London'];
+        $colors = ['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#06B6D4'];
+        $fontSizes = ['small', 'medium', 'large'];
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'avatar' => fake()->boolean(30) ? 'https://ui-avatars.com/api/?name=' . urlencode(fake()->name()) : null,
+            'email_notifications' => fake()->boolean(80), // 80% enable notifications
+            'timezone' => fake()->randomElement($timezones),
+            'theme_color' => fake()->randomElement($colors),
+            'font_size' => fake()->randomElement($fontSizes),
         ];
     }
 
